@@ -5,10 +5,16 @@ import Icon from './Icon.astro';
 
 <aside>
 	<h2>Interested in working together?</h2>
-	<CallToAction href="mailto:me@example.com">
-		Send Me a Message
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
+	<div class="actions">
+		<CallToAction href="mailto:hengxu07@gmail.com">
+			Send Me a Message
+			<Icon icon="paper-plane-tilt" size="1.2em" />
+		</CallToAction>
+		<CallToAction href="https://www.linkedin.com/in/heng-x-71603133/">
+			LinkedIn
+			<Icon icon="linkedin-logo" size="1.2em" />
+		</CallToAction>
+	</div>
 </aside>
 
 <style>
@@ -30,6 +36,13 @@ import Icon from './Icon.astro';
 		max-width: 15ch;
 	}
 
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
+	}
+
 	@media (min-width: 50em) {
 		aside {
 			padding: 7.5rem;
@@ -41,6 +54,10 @@ import Icon from './Icon.astro';
 		h2 {
 			font-size: var(--text-3xl);
 			text-align: left;
+		}
+
+		.actions {
+			justify-content: flex-start;
 		}
 	}
 </style>
