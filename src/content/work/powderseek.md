@@ -7,8 +7,9 @@ description: |
   AI-powered ski and snowboard trip planner — tell it how many days you have and it finds the best mountain for you, from a SoCal day trip to a 10-day Japan powder pilgrimage.
 tags:
   - AI
+  - React
   - Python
-  - API
+  - PostgreSQL
 url: https://powderseek.vercel.app/
 github: https://github.com/hengxu07/powderseek
 ---
@@ -19,14 +20,20 @@ Powderseek takes one input — how many days you have — and figures out the re
 
 Planning a ski trip is weirdly hard. Snow reports are scattered across resort sites, travel time math is manual, and budget estimates require opening six tabs. I wanted something that could take a rough idea ("I have a long weekend and $800") and turn it into an actual recommendation — not a listicle, but a specific answer.
 
+## How it works
+
+Resorts are scored on four weighted signals: snow quality (new snow + 7-day accumulation + base depth), travel efficiency (flight and drive time relative to trip length), terrain match, and budget alignment. A trip-tier classifier unlocks different resort pools as the trip gets longer — local SoCal spots for a day trip, Utah and Colorado for a long weekend, and Japan or Europe for a week-plus trip.
+
+The Claude-powered agent streams its recommendation as it reasons, uses tools to fetch fresh forecast data and compare resorts side-by-side, and persists resort context across follow-up questions so you can ask "what's the food scene like?" without losing the thread.
+
 ## Key features
 
-- **Trip-length aware** — optimizes recommendations for everything from a day trip to a multi-week expedition
-- **Live snow forecasts** — pulls current conditions and upcoming storm windows to surface the best snow, not just the most popular resort
-- **Travel time modeling** — factors in drive vs. fly tradeoffs based on your location and trip length
-- **Skill-level matching** — filters and ranks terrain by ability level so beginners and advanced riders get different answers
-- **Budget estimation** — accounts for lift tickets, travel, and lodging to keep recommendations realistic
+- **Trip-length tiers** — day / weekend / short / medium / long / expedition, each with different reachable resort pools
+- **Live snow forecasts** — 37 resorts across 5 continents refreshed every 6 hours via Open-Meteo
+- **Agentic reasoning** — Claude uses tool calls to fetch forecasts, compare resorts, and save preferences mid-conversation
+- **Conversational continuity** — follow-up questions stay in context; the agent remembers which resorts it ranked
+- **Streaming responses** — answers stream token by token over SSE so it feels fast even on long responses
 
 ## Stack
 
-Python · FastAPI · Claude API (Anthropic)
+React · TypeScript · FastAPI · PostgreSQL · Claude API (Anthropic) · Open-Meteo · Railway · Vercel
