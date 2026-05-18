@@ -19,10 +19,12 @@ const catModules = import.meta.glob<{ default: ImageMetadata }>('../assets/cats/
 const snowModules = import.meta.glob<{ default: ImageMetadata }>('../assets/snowboarding/*.{jpg,jpeg,png,webp}', { eager: true });
 const surfModules = import.meta.glob<{ default: ImageMetadata }>('../assets/surfing/*.{jpg,jpeg,png,webp}', { eager: true });
 const japanModules = import.meta.glob<{ default: ImageMetadata }>('../assets/japan/*.{jpg,jpeg,png,webp}', { eager: true });
+const animeModules = import.meta.glob<{ default: ImageMetadata }>('../assets/anime/*.{jpg,jpeg,png,webp}', { eager: true });
 const catImages = Object.values(catModules).map((m) => m.default);
 const snowImages = Object.values(snowModules).map((m) => m.default);
 const surfImages = Object.values(surfModules).map((m) => m.default);
 const japanImages = Object.values(japanModules).map((m) => m.default);
+const animeImages = Object.values(animeModules).map((m) => m.default);
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
@@ -61,7 +63,10 @@ const projects = (await getCollection('work'))
 							? <PhotoPill galleryId="japan">🎌 Japan</PhotoPill>
 							: <Pill>🎌 Japan</Pill>
 						}
-						<Pill>アニメ</Pill>
+						{animeImages.length > 0
+							? <PhotoPill galleryId="anime">アニメ</PhotoPill>
+							: <Pill>アニメ</Pill>
+						}
 					</div>
 
 					{surfImages.length > 0 && (
@@ -126,6 +131,24 @@ const projects = (await getCollection('work'))
 										<Image
 											src={img}
 											alt="My cats"
+											width={img.width}
+											height={img.height}
+											class="photo-thumb"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
+
+					{animeImages.length > 0 && (
+						<div class="photo-strip-wrapper" id="gallery-anime">
+							<div class="photo-strip">
+								<div class="photo-strip-inner">
+									{animeImages.map((img) => (
+										<Image
+											src={img}
+											alt="Anime"
 											width={img.width}
 											height={img.height}
 											class="photo-thumb"
