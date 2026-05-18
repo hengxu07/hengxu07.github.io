@@ -3,6 +3,8 @@ title: Powderseek iOS
 publishDate: 2026-05-18 00:00:00
 img: /assets/powderseek-ios-1.png
 img_alt: Powderseek iOS app showing a ski resort recommendation
+img_position: center top
+img_fit: contain
 description: |
   Native SwiftUI companion to Powderseek — real-time AI resort recommendations, SSE streaming, and a full resort detail sheet, built as a first iOS project.
 tags:
