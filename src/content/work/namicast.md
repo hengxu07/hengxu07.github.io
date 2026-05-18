@@ -5,12 +5,12 @@ img: /assets/namicast-1.png
 img_alt: Namicast surf forecast app interface
 description: |
   AI-powered surf forecast app — ask any question about any spot and get a personalized recommendation based on your board and skill level.
-  
-  ![Namicast forecast view](/assets/namicast-2.png) 
 tags:
   - AI
   - Python
   - Full Stack
+url: https://namicast.vercel.app/
+github: https://github.com/hengxu07/namicast
 ---
 
 Namicast is an agentic surf forecast tool built around a conversational interface. Instead of staring at raw swell charts, you just ask: *"Is San Onofre worth it tomorrow morning?"* — and the agent autonomously fetches real-time data to give you a direct, personalized answer.

@@ -40,11 +40,32 @@ const { Content } = await render(entry);
 							<p class="description">{entry.data.description}</p>
 						</div>
 					</Hero>
+					{(entry.data.url || entry.data.github) && (
+						<div class="project-links">
+							{entry.data.url && (
+								<a href={entry.data.url} target="_blank" rel="noopener noreferrer" class="link-btn link-btn--primary">
+									Live Site <Icon icon="arrow-right" size="1.1em" />
+								</a>
+							)}
+							{entry.data.github && (
+								<a href={entry.data.github} target="_blank" rel="noopener noreferrer" class="link-btn link-btn--outline">
+									<Icon icon="github-logo" size="1.1em" /> GitHub
+								</a>
+							)}
+						</div>
+					)}
 				</div>
 			</header>
 			<main class="wrapper">
 				<div class="stack gap-10 content">
 					{entry.data.img && <img src={entry.data.img} alt={entry.data.img_alt || ''} />}
+					{entry.data.images && entry.data.images.length > 0 && (
+						<div class="image-grid">
+							{entry.data.images.map((image) => (
+								<img src={image.src} alt={image.alt} />
+							))}
+						</div>
+					)}
 					<div class="content">
 						<Content />
 					</div>
@@ -63,6 +84,48 @@ const { Content } = await render(entry);
 
 	.back-link {
 		display: none;
+	}
+
+	.project-links {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		padding: 0 0.5rem;
+	}
+
+	.link-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4em;
+		padding: 0.5rem 1.25rem;
+		border-radius: 999rem;
+		font-size: var(--text-sm);
+		font-weight: 500;
+		text-decoration: none;
+		transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+		white-space: nowrap;
+	}
+
+	.link-btn--primary {
+		background-color: var(--accent-regular);
+		border: 1px solid var(--accent-regular);
+		color: var(--accent-text-over);
+	}
+
+	.link-btn--primary:hover {
+		background-color: var(--accent-dark);
+		border-color: var(--accent-dark);
+	}
+
+	.link-btn--outline {
+		background-color: transparent;
+		border: 1px solid var(--accent-regular);
+		color: var(--accent-regular);
+	}
+
+	.link-btn--outline:hover {
+		background-color: var(--accent-regular);
+		color: var(--accent-text-over);
 	}
 
 	.details {
@@ -106,6 +169,31 @@ const { Content } = await render(entry);
 		box-shadow: var(--shadow-sm);
 		background: var(--gradient-subtle);
 		border: 1px solid var(--gray-800);
+	}
+
+	.image-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		max-width: 65ch;
+		margin-inline: auto;
+		width: 100%;
+	}
+
+	.image-grid img {
+		width: 100%;
+		height: 300px;
+		object-fit: cover;
+		object-position: top;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-sm);
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+	}
+
+	.image-grid img:last-child:nth-child(odd) {
+		grid-column: span 2;
+		height: 360px;
 	}
 
 	.content :global(blockquote) {

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 // Component Imports
 import CallToAction from '../components/CallToAction.astro';
@@ -7,11 +8,21 @@ import ContactCTA from '../components/ContactCTA.astro';
 import Grid from '../components/Grid.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
+import PhotoPill from '../components/PhotoPill.astro';
 import Pill from '../components/Pill.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Skills from '../components/Skills.astro';
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const catModules = import.meta.glob<{ default: ImageMetadata }>('../assets/cats/*.{jpg,jpeg,png,webp}', { eager: true });
+const snowModules = import.meta.glob<{ default: ImageMetadata }>('../assets/snowboarding/*.{jpg,jpeg,png,webp}', { eager: true });
+const surfModules = import.meta.glob<{ default: ImageMetadata }>('../assets/surfing/*.{jpg,jpeg,png,webp}', { eager: true });
+const japanModules = import.meta.glob<{ default: ImageMetadata }>('../assets/japan/*.{jpg,jpeg,png,webp}', { eager: true });
+const catImages = Object.values(catModules).map((m) => m.default);
+const snowImages = Object.values(snowModules).map((m) => m.default);
+const surfImages = Object.values(surfModules).map((m) => m.default);
+const japanImages = Object.values(japanModules).map((m) => m.default);
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
@@ -34,10 +45,96 @@ const projects = (await getCollection('work'))
 					<div class="roles">
 						<Pill><Icon icon="code" size="1.33em" /> Engineer</Pill>
 						<Pill><Icon icon="rocket-launch" size="1.33em" /> Builder</Pill>
-						<Pill>🏄 Surfer</Pill>
-						<Pill>🏂 Snowboarder</Pill>
-						<Pill>🐱 Cat Lover</Pill>
+						{surfImages.length > 0
+							? <PhotoPill galleryId="surfing">🏄 Surfer</PhotoPill>
+							: <Pill>🏄 Surfer</Pill>
+						}
+						{snowImages.length > 0
+							? <PhotoPill galleryId="snowboarder">🏂 Snowboarder</PhotoPill>
+							: <Pill>🏂 Snowboarder</Pill>
+						}
+						{catImages.length > 0
+							? <PhotoPill galleryId="cats">🐱 Cat Lover</PhotoPill>
+							: <Pill>🐱 Cat Lover</Pill>
+						}
+						{japanImages.length > 0
+							? <PhotoPill galleryId="japan">🎌 Japan</PhotoPill>
+							: <Pill>🎌 Japan</Pill>
+						}
+						<Pill>アニメ</Pill>
 					</div>
+
+					{surfImages.length > 0 && (
+						<div class="photo-strip-wrapper" id="gallery-surfing">
+							<div class="photo-strip">
+								<div class="photo-strip-inner">
+									{surfImages.map((img) => (
+										<Image
+											src={img}
+											alt="Surfing"
+											width={img.width}
+											height={img.height}
+											class="photo-thumb"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
+
+					{snowImages.length > 0 && (
+						<div class="photo-strip-wrapper" id="gallery-snowboarder">
+							<div class="photo-strip">
+								<div class="photo-strip-inner">
+									{snowImages.map((img) => (
+										<Image
+											src={img}
+											alt="Snowboarding"
+											width={img.width}
+											height={img.height}
+											class="photo-thumb"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
+
+					{japanImages.length > 0 && (
+						<div class="photo-strip-wrapper" id="gallery-japan">
+							<div class="photo-strip">
+								<div class="photo-strip-inner">
+									{japanImages.map((img) => (
+										<Image
+											src={img}
+											alt="Japan"
+											width={img.width}
+											height={img.height}
+											class="photo-thumb"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
+
+					{catImages.length > 0 && (
+						<div class="photo-strip-wrapper" id="gallery-cats">
+							<div class="photo-strip">
+								<div class="photo-strip-inner">
+									{catImages.map((img) => (
+										<Image
+											src={img}
+											alt="My cats"
+											width={img.width}
+											height={img.height}
+											class="photo-thumb"
+										/>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
 				</Hero>
 
 				{/* Replace /assets/portrait.jpg with your own photo to show it here */}
@@ -222,4 +319,60 @@ const projects = (await getCollection('work'))
 			height: 9.5rem;
 		}
 	}
+
+	/* ====================================================== */
+
+	.photo-strip-wrapper {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s ease;
+		width: 100%;
+	}
+
+	.photo-strip-wrapper.open {
+		grid-template-rows: 1fr;
+	}
+
+	.photo-strip {
+		overflow: hidden;
+	}
+
+	.photo-strip-inner {
+		display: flex;
+		gap: 0.75rem;
+		padding: 0.75rem 0 0.25rem;
+		overflow-x: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--accent-regular) transparent;
+	}
+
+	:global(.photo-thumb) {
+		height: 160px;
+		width: auto;
+		border-radius: 0.75rem;
+		object-fit: cover;
+		flex-shrink: 0;
+		box-shadow: var(--shadow-sm);
+	}
 </style>
+
+<script>
+	document.querySelectorAll<HTMLButtonElement>('[data-gallery-trigger]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const id = btn.dataset.galleryTrigger;
+			const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+			document.querySelectorAll('[data-gallery-trigger]').forEach((b) =>
+				b.setAttribute('aria-expanded', 'false'),
+			);
+			document.querySelectorAll('.photo-strip-wrapper').forEach((w) =>
+				w.classList.remove('open'),
+			);
+
+			if (!isOpen && id) {
+				btn.setAttribute('aria-expanded', 'true');
+				document.getElementById(`gallery-${id}`)?.classList.add('open');
+			}
+		});
+	});
+</script>
