@@ -2,6 +2,8 @@
 
 Personal portfolio site for Heng Xu — built with [Astro](https://astro.build) and deployed to GitHub Pages.
 
+**Live site:** https://hengxu07.github.io
+
 ## Projects
 
 - **[Dokkai](https://dokkai-lilac.vercel.app/)** — AI-powered Japanese reading assistant. Upload any text or PDF and get vocabulary extraction, grammar analysis, JLPT level assessment, and auto-generated quizzes.
