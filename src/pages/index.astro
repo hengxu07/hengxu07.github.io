@@ -1,401 +1,196 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-// Component Imports
-import CallToAction from '../components/CallToAction.astro';
-// Page section components
-import ContactCTA from '../components/ContactCTA.astro';
-import Grid from '../components/Grid.astro';
-import Hero from '../components/Hero.astro';
-import Icon from '../components/Icon.astro';
-import PhotoPill from '../components/PhotoPill.astro';
-import Pill from '../components/Pill.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
-import Skills from '../components/Skills.astro';
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
-const catModules = import.meta.glob<{ default: ImageMetadata }>('../assets/cats/*.{jpg,jpeg,png,webp}', { eager: true });
-const snowModules = import.meta.glob<{ default: ImageMetadata }>('../assets/snowboarding/*.{jpg,jpeg,png,webp}', { eager: true });
-const surfModules = import.meta.glob<{ default: ImageMetadata }>('../assets/surfing/*.{jpg,jpeg,png,webp}', { eager: true });
-const japanModules = import.meta.glob<{ default: ImageMetadata }>('../assets/japan/*.{jpg,jpeg,png,webp}', { eager: true });
-const animeModules = import.meta.glob<{ default: ImageMetadata }>('../assets/anime/*.{jpg,jpeg,png,webp}', { eager: true });
-const catImages = Object.values(catModules).map((m) => m.default);
-const snowImages = Object.values(snowModules).map((m) => m.default);
-const surfImages = Object.values(surfModules).map((m) => m.default);
-const japanImages = Object.values(japanModules).map((m) => m.default);
-const animeImages = Object.values(animeModules).map((m) => m.default);
-
-// Content Fetching: List four most recent work projects
 const projects = (await getCollection('work'))
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-	.slice(0, 4);
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
 <BaseLayout>
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero">
-				<Hero
-					title="Hello, my name is Heng Xu"
-					tagline="I build AI-powered products that do useful things."
-					align="start"
-				>
-					<div class="roles">
-						<Pill><Icon icon="code" size="1.33em" /> Engineer</Pill>
-						<Pill><Icon icon="rocket-launch" size="1.33em" /> Builder</Pill>
-						{surfImages.length > 0
-							? <PhotoPill galleryId="surfing">🏄 Surfer</PhotoPill>
-							: <Pill>🏄 Surfer</Pill>
-						}
-						{snowImages.length > 0
-							? <PhotoPill galleryId="snowboarder">🏂 Snowboarder</PhotoPill>
-							: <Pill>🏂 Snowboarder</Pill>
-						}
-						{catImages.length > 0
-							? <PhotoPill galleryId="cats">🐱 Cat Lover</PhotoPill>
-							: <Pill>🐱 Cat Lover</Pill>
-						}
-						{japanImages.length > 0
-							? <PhotoPill galleryId="japan">🎌 Japan</PhotoPill>
-							: <Pill>🎌 Japan</Pill>
-						}
-						{animeImages.length > 0
-							? <PhotoPill galleryId="anime">アニメ</PhotoPill>
-							: <Pill>アニメ</Pill>
-						}
+	<main class="wrapper">
+
+		<!-- Hero -->
+		<section class="hero">
+			<div class="prompt-block">
+				<p class="prompt"><span class="ps1">~/hengxu $</span> whoami</p>
+				<div class="output">
+					<p class="big">engineer. builder.</p>
+					<p class="big dim">surfer. snowboarder. cat person.</p>
+				</div>
+				<p class="prompt"><span class="ps1">~/hengxu $</span> cat about.txt</p>
+				<div class="output">
+					<p class="tagline">
+						most of my projects start with "I wish there was a tool that..." — so I build it.
+					</p>
+					<div class="tags">
+						<span>python</span>
+						<span>fastapi</span>
+						<span>react</span>
+						<span>claude api</span>
+						<span>langgraph</span>
 					</div>
-
-					{surfImages.length > 0 && (
-						<div class="photo-strip-wrapper" id="gallery-surfing">
-							<div class="photo-strip">
-								<div class="photo-strip-inner">
-									{surfImages.map((img) => (
-										<Image
-											src={img}
-											alt="Surfing"
-											width={img.width}
-											height={img.height}
-											class="photo-thumb"
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-					)}
-
-					{snowImages.length > 0 && (
-						<div class="photo-strip-wrapper" id="gallery-snowboarder">
-							<div class="photo-strip">
-								<div class="photo-strip-inner">
-									{snowImages.map((img) => (
-										<Image
-											src={img}
-											alt="Snowboarding"
-											width={img.width}
-											height={img.height}
-											class="photo-thumb"
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-					)}
-
-					{japanImages.length > 0 && (
-						<div class="photo-strip-wrapper" id="gallery-japan">
-							<div class="photo-strip">
-								<div class="photo-strip-inner">
-									{japanImages.map((img) => (
-										<Image
-											src={img}
-											alt="Japan"
-											width={img.width}
-											height={img.height}
-											class="photo-thumb"
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-					)}
-
-					{catImages.length > 0 && (
-						<div class="photo-strip-wrapper" id="gallery-cats">
-							<div class="photo-strip">
-								<div class="photo-strip-inner">
-									{catImages.map((img) => (
-										<Image
-											src={img}
-											alt="My cats"
-											width={img.width}
-											height={img.height}
-											class="photo-thumb"
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-					)}
-
-					{animeImages.length > 0 && (
-						<div class="photo-strip-wrapper" id="gallery-anime">
-							<div class="photo-strip">
-								<div class="photo-strip-inner">
-									{animeImages.map((img) => (
-										<Image
-											src={img}
-											alt="Anime"
-											width={img.width}
-											height={img.height}
-											class="photo-thumb"
-										/>
-									))}
-								</div>
-							</div>
-						</div>
-					)}
-				</Hero>
-
-				{/* Replace /assets/portrait.jpg with your own photo to show it here */}
-			</header>
-
-			<Skills />
-		</div>
-
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Selected Work</h3>
-					<p>A selection of projects I've built — from AI-powered apps to developer tools.</p>
-				</header>
-
-				<div class="gallery">
-					<Grid variant="offset">
-						{
-							projects.map((project) => (
-								<li>
-									<PortfolioPreview project={project} />
-								</li>
-							))
-						}
-					</Grid>
 				</div>
+			</div>
+		</section>
 
-				<div class="cta">
-					<CallToAction href="/work/">
-						View All
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
+		<!-- Projects -->
+		<section class="projects">
+			<div class="section-prompt">
+				<p class="prompt"><span class="ps1">~/hengxu $</span> ls projects/</p>
+			</div>
+			<div class="project-grid">
+				{projects.map((project) => (
+					<PortfolioPreview project={project} />
+				))}
+			</div>
+		</section>
+
+		<!-- Skills -->
+		<section class="skills">
+			<p class="prompt"><span class="ps1">~/hengxu $</span> cat skills.txt</p>
+			<div class="skills-grid">
+				<div class="skill">
+					<p class="skill-title"><span class="comment">// </span>full-stack</p>
+					<p class="skill-body">Python · FastAPI · React · PostgreSQL<br/>ships the whole thing, database to deployed UI.</p>
 				</div>
-			</section>
+				<div class="skill">
+					<p class="skill-title"><span class="comment">// </span>ai-powered</p>
+					<p class="skill-body">Claude API · LangGraph · tool-use · SSE streaming<br/>agents that actually do useful work, not just wrappers.</p>
+				</div>
+				<div class="skill">
+					<p class="skill-title"><span class="comment">// </span>product-minded</p>
+					<p class="skill-body">thinks in user flows, not just endpoints.<br/>ships fast, iterates faster.</p>
+				</div>
+			</div>
+		</section>
 
-		</main>
+	</main>
 
-		<ContactCTA />
-	</div>
+	<ContactCTA />
 </BaseLayout>
 
 <style>
-	.hero {
+	main {
+		padding-block: 4rem;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
+		gap: 5rem;
 	}
 
-	.roles {
+	/* ── Shared prompt style ── */
+	.prompt {
+		font-size: var(--text-sm);
+		color: var(--text-dim);
+		margin-bottom: 1rem;
+	}
+
+	.ps1 {
+		color: var(--accent);
+		font-weight: 600;
+		margin-right: 0.5rem;
+	}
+
+	.output {
+		padding-left: 1.5rem;
+		border-left: 2px solid var(--border);
+		margin-bottom: 2rem;
+	}
+
+	/* ── Hero ── */
+	.hero {}
+
+	.prompt-block {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.big {
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 600;
+		line-height: 1.1;
+		color: var(--text);
+		letter-spacing: -0.03em;
+	}
+
+	.big.dim {
+		color: var(--text-dim);
+	}
+
+	.tagline {
+		font-size: var(--text-md);
+		color: var(--text-dim);
+		max-width: 55ch;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
 	}
 
-	.hero img {
-		aspect-ratio: 5 / 4;
-		object-fit: cover;
-		object-position: top;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
+	.tags span {
+		font-size: var(--text-sm);
+		color: var(--accent);
+		background: var(--accent-subtle-overlay);
+		border: 1px solid var(--accent-dim);
+		padding: 0.2rem 0.6rem;
+		border-radius: 2px;
+	}
+
+	/* ── Projects ── */
+	.section-prompt {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1px;
+		border: 1px solid var(--border);
 	}
 
 	@media (min-width: 50em) {
-		.hero {
-			display: grid;
-			grid-template-columns: 6fr 4fr;
-			padding-inline: 2.5rem;
-			gap: 3.75rem;
-		}
-
-		.roles {
-			margin-top: 0.5rem;
-		}
-
-		.hero img {
-			aspect-ratio: 3 / 4;
-			border-radius: 4.5rem;
-			object-fit: cover;
+		.project-grid {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	/* ====================================================== */
-
-	.section {
-		display: grid;
+	/* ── Skills ── */
+	.skills-grid {
+		display: flex;
+		flex-direction: column;
 		gap: 2rem;
+		padding-left: 1.5rem;
+		border-left: 2px solid var(--border);
+		margin-top: 1rem;
 	}
 
-	.with-background {
-		position: relative;
+	.skill-title {
+		font-size: var(--text-base);
+		font-weight: 600;
+		color: var(--text);
+		margin-bottom: 0.25rem;
 	}
 
-	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
-
-		content: '';
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
-		background:
-			url('/assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
-		z-index: -1;
+	.comment {
+		color: var(--text-muted);
 	}
 
-	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
-	}
-
-	.section-header {
-		justify-self: center;
-		text-align: center;
-		max-width: 50ch;
-		font-size: var(--text-md);
-		color: var(--gray-300);
-	}
-
-	.section-header h3 {
-		font-size: var(--text-2xl);
+	.skill-body {
+		font-size: var(--text-sm);
+		color: var(--text-dim);
+		line-height: 1.7;
 	}
 
 	@media (min-width: 50em) {
-		.section {
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
-			gap: 5rem;
+		.skills-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 3rem;
 		}
-
-		.section.with-cta {
-			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
-		}
-
-		.section-header {
-			grid-area: header;
-			font-size: var(--text-lg);
-		}
-
-		.section-header h3 {
-			font-size: var(--text-4xl);
-		}
-
-		.with-cta .section-header {
-			justify-self: flex-start;
-			text-align: left;
-		}
-
-		.gallery {
-			grid-area: gallery;
-		}
-
-		.cta {
-			grid-area: cta;
-		}
-	}
-
-	/* ====================================================== */
-
-	.mention-card {
-		display: flex;
-		height: 7rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		color: var(--gray-300);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-	}
-
-	@media (min-width: 50em) {
-		.mention-card {
-			border-radius: 1.5rem;
-			height: 9.5rem;
-		}
-	}
-
-	/* ====================================================== */
-
-	.photo-strip-wrapper {
-		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 0.35s ease;
-		width: 100%;
-	}
-
-	.photo-strip-wrapper.open {
-		grid-template-rows: 1fr;
-	}
-
-	.photo-strip {
-		overflow: hidden;
-	}
-
-	.photo-strip-inner {
-		display: flex;
-		gap: 0.75rem;
-		padding: 0.75rem 0 0.25rem;
-		overflow-x: auto;
-		scrollbar-width: thin;
-		scrollbar-color: var(--accent-regular) transparent;
-	}
-
-	:global(.photo-thumb) {
-		height: 160px;
-		width: auto;
-		border-radius: 0.75rem;
-		object-fit: cover;
-		flex-shrink: 0;
-		box-shadow: var(--shadow-sm);
 	}
 </style>
-
-<script>
-	document.querySelectorAll<HTMLButtonElement>('[data-gallery-trigger]').forEach((btn) => {
-		btn.addEventListener('click', () => {
-			const id = btn.dataset.galleryTrigger;
-			const isOpen = btn.getAttribute('aria-expanded') === 'true';
-
-			document.querySelectorAll('[data-gallery-trigger]').forEach((b) =>
-				b.setAttribute('aria-expanded', 'false'),
-			);
-			document.querySelectorAll('.photo-strip-wrapper').forEach((w) =>
-				w.classList.remove('open'),
-			);
-
-			if (!isOpen && id) {
-				btn.setAttribute('aria-expanded', 'true');
-				document.getElementById(`gallery-${id}`)?.classList.add('open');
-			}
-		});
-	});
-</script>
