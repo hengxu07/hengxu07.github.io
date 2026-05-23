@@ -24,7 +24,7 @@ const { Content } = await render(entry);
 		<a class="back-link" href="/work/">← work</a>
 
 		<header>
-			<p class="prompt"><span class="ps1">~/hengxu $</span> cat projects/{entry.data.title.toLowerCase().replace(/\s+/g, '-')}.md</p>
+			<p class="prompt"><span class="ps1">~/hengxu $</span> cat projects/{entry.data.title.toLowerCase().replace(/\s+/g, '-')}.md<span class="cursor"></span></p>
 			<div class="meta">
 				<h1 class="title">{entry.data.title}</h1>
 				<p class="description">{entry.data.description}</p>

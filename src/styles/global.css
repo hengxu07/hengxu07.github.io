@@ -141,6 +141,21 @@ h5 { font-size: var(--text-xl); }
 .gap-30 { gap: 7.5rem; }
 .gap-48 { gap: 12rem; }
 
+.cursor {
+	display: inline-block;
+	width: 0.55em;
+	height: 1em;
+	background: var(--accent);
+	margin-left: 0.25em;
+	vertical-align: text-bottom;
+	animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+	0%, 100% { opacity: 1; }
+	50%       { opacity: 0; }
+}
+
 @media (min-width: 50em) {
 	.lg\:gap-2  { gap: 0.5rem; }
 	.lg\:gap-4  { gap: 1rem; }
