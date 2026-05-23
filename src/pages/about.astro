@@ -1,104 +1,152 @@
 ---
-import ContactCTA from '../components/ContactCTA.astro';
-import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 ---
 
 <BaseLayout title="About | Heng Xu" description="About Heng Xu — Software Engineer based in Orange County, CA">
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="About"
-				tagline="Thanks for stopping by. A bit about who I am and how I got here."
-			/>
+	<main class="wrapper">
+		<p class="prompt"><span class="ps1">~/hengxu $</span> cat about.txt</p>
 
+		<div class="sections">
 			<section>
-				<h2 class="section-title">Background</h2>
-				<div class="content">
+				<p class="section-label"><span class="comment">// </span>background</p>
+				<div class="section-body">
 					<p>
-						I'm a software engineer based in Orange County, CA with a background spanning information systems and computer science. I gravitate toward the full stack — designing APIs, wiring up databases, and building interfaces that feel good to use.
+						Software engineer based in Orange County, CA. Background spanning information systems and computer science — I gravitate toward the full stack, from designing APIs to building interfaces that feel good to use.
 					</p>
 					<p>
 						Lately I've been deep in AI and agentic systems: building apps where LLMs autonomously call tools, stream responses, and adapt to user context. I find it genuinely exciting to close the gap between what models can do and what real users actually need.
 					</p>
 					<p>
-						Outside of work, I surf whenever the swell cooperates (mostly San Onofre), snowboard in the winter, and am always somewhere on the hunt for a good wave or a good run.
+						Outside of work, I surf whenever the swell cooperates (mostly San Onofre) and snowboard in the winter.
 					</p>
 				</div>
 			</section>
-			<section>
-				<h2 class="section-title">Education</h2>
-				<div class="content">
-					<p>M.S. Computer Science — Northeastern University</p>
-					<p>B.A. Information Systems — University of Washington</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Skills</h2>
-				<div class="content">
-					<p>Python · TypeScript · React · FastAPI · PostgreSQL · Claude API · Docker · Git</p>
-				</div>
-			</section>
-		</main>
 
-		<ContactCTA />
-	</div>
+			<section>
+				<p class="section-label"><span class="comment">// </span>education</p>
+				<div class="section-body">
+					<div class="edu-row">
+						<span class="edu-degree">M.S. Computer Science</span>
+						<span class="edu-school">Northeastern University</span>
+					</div>
+					<div class="edu-row">
+						<span class="edu-degree">B.A. Information Systems</span>
+						<span class="edu-school">University of Washington</span>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<p class="section-label"><span class="comment">// </span>skills</p>
+				<div class="section-body">
+					<div class="skill-group">
+						<span class="skill-category">languages</span>
+						<span>Python · TypeScript · Swift · SQL</span>
+					</div>
+					<div class="skill-group">
+						<span class="skill-category">backend</span>
+						<span>FastAPI · PostgreSQL · Redis · Docker</span>
+					</div>
+					<div class="skill-group">
+						<span class="skill-category">frontend</span>
+						<span>React · Astro · SwiftUI</span>
+					</div>
+					<div class="skill-group">
+						<span class="skill-category">ai / ml</span>
+						<span>Claude API · LangGraph · tool-use · SSE streaming</span>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+	<ContactCTA />
 </BaseLayout>
 
 <style>
-	.about {
+	main {
+		padding-block: 4rem;
 		display: flex;
 		flex-direction: column;
-		gap: 3.5rem;
+		gap: 3rem;
 	}
 
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
+	.prompt {
+		font-size: var(--text-sm);
+		color: var(--text-dim);
+	}
+
+	.ps1 {
+		color: var(--accent);
+		font-weight: 600;
+		margin-right: 0.5rem;
+	}
+
+	.sections {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		padding-left: 1.5rem;
+		border-left: 2px solid var(--border);
 	}
 
 	section {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
+		gap: 0.75rem;
 	}
 
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
+	.section-label {
+		font-size: var(--text-base);
+		font-weight: 600;
+		color: var(--text);
 	}
 
-	.content {
-		grid-column: 2 / 4;
+	.comment {
+		color: var(--text-muted);
 	}
 
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
+	.section-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		font-size: var(--text-sm);
+		color: var(--text-dim);
+		line-height: 1.7;
 	}
 
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
+	.edu-row {
+		display: flex;
+		gap: 1.5rem;
+		align-items: baseline;
+	}
+
+	.edu-degree {
+		color: var(--text);
+		font-weight: 500;
+		min-width: 18ch;
+	}
+
+	.edu-school {
+		color: var(--text-dim);
+	}
+
+	.skill-group {
+		display: flex;
+		gap: 1.5rem;
+		align-items: baseline;
+	}
+
+	.skill-category {
+		color: var(--text-muted);
+		min-width: 10ch;
+		font-size: var(--text-sm);
 	}
 
 	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
-
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
-
-		section {
-			display: contents;
-			font-size: var(--text-lg);
+		.edu-row,
+		.skill-group {
+			gap: 2.5rem;
 		}
 	}
 </style>

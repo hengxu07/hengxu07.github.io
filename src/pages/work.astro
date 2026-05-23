@@ -1,37 +1,60 @@
 ---
 import { getCollection } from 'astro:content';
-import ContactCTA from '../components/ContactCTA.astro';
-import Grid from '../components/Grid.astro';
-import Hero from '../components/Hero.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
-const projects = (await getCollection('work')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+const projects = (await getCollection('work'))
+	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
-<BaseLayout
-	title="My Work | Heng Xu"
-	description="Projects by Heng Xu — full-stack and AI-powered applications"
->
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Hero
-				title="My Work"
-				tagline="See my most recent projects below to get an idea of my past experience."
-				align="start"
-			/>
-			<Grid variant="offset">
-				{
-					projects.map((project) => (
-						<li>
-							<PortfolioPreview project={project} />
-						</li>
-					))
-				}
-			</Grid>
-		</main>
-		<ContactCTA />
-	</div>
+<BaseLayout title="Work | Heng Xu" description="Projects by Heng Xu — full-stack and AI-powered applications">
+	<main class="wrapper">
+		<section class="projects">
+			<div class="section-prompt">
+				<p class="prompt"><span class="ps1">~/hengxu $</span> ls projects/</p>
+			</div>
+			<div class="project-grid">
+				{projects.map((project) => (
+					<PortfolioPreview project={project} />
+				))}
+			</div>
+		</section>
+	</main>
+	<ContactCTA />
 </BaseLayout>
+
+<style>
+	main {
+		padding-block: 4rem;
+	}
+
+	.prompt {
+		font-size: var(--text-sm);
+		color: var(--text-dim);
+		margin-bottom: 1.5rem;
+	}
+
+	.ps1 {
+		color: var(--accent);
+		font-weight: 600;
+		margin-right: 0.5rem;
+	}
+
+	.section-prompt {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1px;
+		border: 1px solid var(--border);
+	}
+
+	@media (min-width: 50em) {
+		.project-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
