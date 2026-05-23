@@ -17,7 +17,7 @@ const projects = (await getCollection('work'))
 				<p class="prompt"><span class="ps1">~/hengxu $</span> whoami</p>
 				<div class="output">
 					<p class="big">engineer. builder.</p>
-					<p class="big dim">surfer. snowboarder. cat person.</p>
+					<p class="big dim">surfer. snowboarder. owned by two cats.</p>
 				</div>
 				<p class="prompt"><span class="ps1">~/hengxu $</span> cat about.txt</p>
 				<div class="output">
@@ -31,6 +31,7 @@ const projects = (await getCollection('work'))
 						<span>claude api</span>
 						<span>langgraph</span>
 					</div>
+					<p class="aside"><span class="comment">// </span>studying japanese · obsessed with japan · kimchi & onni have final say on PRs · watching too much anime</p>
 				</div>
 			</div>
 		</section>
@@ -130,6 +131,16 @@ const projects = (await getCollection('work'))
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
+	}
+
+	.aside {
+		font-size: var(--text-sm);
+		color: var(--text-muted);
+		margin-top: 0.75rem;
+	}
+
+	.comment {
+		color: var(--border);
 	}
 
 	.tags span {
