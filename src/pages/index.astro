@@ -54,7 +54,11 @@ const projects = (await getCollection('work'))
 			<div class="skills-grid">
 				<div class="skill">
 					<p class="skill-title"><span class="comment">// </span>full-stack</p>
-					<p class="skill-body">Python · FastAPI · React · PostgreSQL<br/>ships the whole thing, database to deployed UI.</p>
+					<p class="skill-body">Java · Python · FastAPI · React · PostgreSQL<br/>ships the whole thing, database to deployed UI.</p>
+				</div>
+				<div class="skill">
+					<p class="skill-title"><span class="comment">// </span>data & cloud</p>
+					<p class="skill-body">PySpark · EMR · AWS · S3 · Glue<br/>batch pipelines and distributed compute at scale.</p>
 				</div>
 				<div class="skill">
 					<p class="skill-title"><span class="comment">// </span>ai-powered</p>
@@ -200,7 +204,7 @@ const projects = (await getCollection('work'))
 	@media (min-width: 50em) {
 		.skills-grid {
 			display: grid;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 			gap: 3rem;
 		}
 	}
